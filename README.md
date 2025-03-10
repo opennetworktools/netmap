@@ -4,6 +4,14 @@ Netmap stands for Network Mapper, a visualizer for your inventory of network dev
 
 Built with love by Roopesh and friends in Go.
 
+## Getting Started
+
+## Install using Go
+
+```
+go install github.com/opennetworktools/netmap
+```
+
 ## Usage
 
 The graph can be created using the command `netmap create`,

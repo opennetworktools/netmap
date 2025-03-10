@@ -48,7 +48,7 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 			fmt.Println("Error creating node:", err)
 			continue
 		}
-		node.SetLabel(utils.TruncateString(device, 3))
+		node.SetLabel(utils.TruncateString(device, 10))
 		node.SetShape(cgraph.EllipseShape)
 		node.SetStyle(cgraph.FilledNodeStyle)
 		nodes[device] = node
@@ -64,7 +64,7 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 					fmt.Println("Error creating node:", err)
 					continue
 				}
-				node.SetLabel(utils.TruncateString(neighbor, 3))
+				node.SetLabel(utils.TruncateString(neighbor, 10))
 				node.SetShape(cgraph.EllipseShape)
 				node.SetStyle(cgraph.FilledNodeStyle)
 				nodes[neighbor] = node
