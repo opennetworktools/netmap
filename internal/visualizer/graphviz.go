@@ -5,10 +5,11 @@ import (
 	"context"
 	"fmt"
 	"image/png"
-	"opennetworktools/netmap/internal/utils"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/opennetworktools/netmap/internal/utils"
 
 	"aqwari.net/xml/xmltree"
 	"github.com/goccy/go-graphviz"

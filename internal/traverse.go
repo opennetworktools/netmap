@@ -3,11 +3,13 @@ package internal
 import (
 	"context"
 	"fmt"
-	"opennetworktools/netmap/internal/arista"
-	"opennetworktools/netmap/internal/utils"
-	"opennetworktools/netmap/internal/visualizer"
 	"strings"
 	"time"
+
+	"github.com/opennetworktools/netmap/internal/utils"
+	"github.com/opennetworktools/netmap/internal/visualizer"
+
+	"github.com/opennetworktools/netmap/internal/arista"
 )
 
 func Traverse(hostname, username, password string) {

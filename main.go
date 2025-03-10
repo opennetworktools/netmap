@@ -1,7 +1,7 @@
 package main
 
 import (
-	"opennetworktools/netmap/cmd"
+	"github.com/opennetworktools/netmap/cmd"
 )
 
 func main() {

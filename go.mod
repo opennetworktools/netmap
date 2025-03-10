@@ -1,4 +1,4 @@
-module opennetworktools/netmap
+module github.com/opennetworktools/netmap
 
 go 1.23.1
 

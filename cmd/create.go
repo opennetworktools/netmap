@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"opennetworktools/netmap/internal"
+	"github.com/opennetworktools/netmap/internal"
 
 	"github.com/spf13/cobra"
 )
