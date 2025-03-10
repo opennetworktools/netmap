@@ -1,8 +1,12 @@
 # Netmap
 
-Netmap stands for Network Mapper, a visualizer for your inventory of network devices. Netmap starts collecting LLDP information with a single device credential and recursively collects neighbor of neighbors information. Built with love by Roopesh and friends in Go.
+Netmap stands for Network Mapper, a visualizer for your inventory of network devices. Netmap starts collecting LLDP information with a single device credential and recursively lookup to create a graph. At the moment the tool supports only Arista devices. 
+
+Built with love by Roopesh and friends in Go.
 
 ## Usage
+
+The graph can be created using the command `netmap create`,
 
 ```
 roopesh:~/ $ netmap create --help                                                                                                                                                                         
@@ -21,5 +25,5 @@ roopesh:~/ $ netmap create -n ok270 -u admin -p password
 
 <figure>
   <img src="./graph.png" alt="Graph created by netmap">
-  <figcaption>Graph created by Netmap</figcaption>
+  <figcaption>The above graph was created by Netmap. The labels of nodes and edges are truncated for privacy concerns.</figcaption>
 </figure>

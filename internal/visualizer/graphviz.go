@@ -8,6 +8,7 @@ import (
 	"opennetworktools/netmap/internal/utils"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"aqwari.net/xml/xmltree"
 	"github.com/goccy/go-graphviz"
@@ -42,11 +43,12 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 
 	// Create nodes
 	for device := range networkMap.Devices {
-		node, err := graph.CreateNodeByName(utils.TruncateString(device, 8))
+		node, err := graph.CreateNodeByName(device)
 		if err != nil {
 			fmt.Println("Error creating node:", err)
 			continue
 		}
+		node.SetLabel(utils.TruncateString(device, 3))
 		node.SetShape(cgraph.EllipseShape)
 		node.SetStyle(cgraph.FilledNodeStyle)
 		nodes[device] = node
@@ -57,11 +59,12 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 		for _, edge := range edges {
 			neighbor := edge.Neighbor
 			if nodes[neighbor] == nil {
-				node, err := graph.CreateNodeByName(utils.TruncateString(neighbor, 8))
+				node, err := graph.CreateNodeByName(neighbor)
 				if err != nil {
 					fmt.Println("Error creating node:", err)
 					continue
 				}
+				node.SetLabel(utils.TruncateString(neighbor, 3))
 				node.SetShape(cgraph.EllipseShape)
 				node.SetStyle(cgraph.FilledNodeStyle)
 				nodes[neighbor] = node
@@ -72,7 +75,7 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 				fmt.Println("Error creating edge:", err)
 				continue
 			}
-			e.SetLabel(fmt.Sprintf("%s ↔ %s", edge.LocalPort, edge.NeighborPort))
+			e.SetLabel(fmt.Sprintf("%s - %s", formatEdgeName(edge.LocalPort), formatEdgeName(edge.NeighborPort)))
 		}
 	}
 
@@ -166,4 +169,12 @@ func renderOutputToFilename(filePath string, outData []byte) error {
 	}
 
 	return nil
+}
+
+func formatEdgeName(name string) string {
+	if strings.Contains(name, ".") {
+		parts := strings.Split(name, ".")
+		return parts[0]
+	}
+	return name
 }

@@ -3,13 +3,13 @@ module opennetworktools/netmap
 go 1.23.1
 
 require (
+	aqwari.net/xml v0.0.0-20210331023308-d9421b293817
 	github.com/aristanetworks/goeapi v1.0.0
 	github.com/goccy/go-graphviz v0.2.9
 	github.com/spf13/cobra v1.9.1
 )
 
 require (
-	aqwari.net/xml v0.0.0-20210331023308-d9421b293817 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/flopp/go-findfont v0.1.0 // indirect
 	github.com/fogleman/gg v1.3.0 // indirect
