@@ -9,7 +9,7 @@ Built with love by Roopesh and friends in Go.
 ## Install using Go
 
 ```
-go install github.com/opennetworktools/netmap
+go install github.com/opennetworktools/netmap@v0.1.1
 ```
 
 ## Usage
