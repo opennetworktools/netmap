@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-func SaveStructAsJson(filename string, structData any) error {
+func SaveStructAsJson(filename string, structData any, timestamp string) error {
 	jsonRes, err := json.Marshal(structData)
 	if err != nil {
 		return err
@@ -18,7 +18,9 @@ func SaveStructAsJson(filename string, structData any) error {
 		return err
 	}
 
-	err = os.WriteFile(appDir+filename+".json", jsonRes, 0644)
+	jsonFilename := fmt.Sprintf("%s_%s.json", "graph", timestamp)
+	jsonPilePath := filepath.Join(appDir, jsonFilename)
+	err = os.WriteFile(jsonPilePath, jsonRes, 0644)
 	if err != nil {
 		fmt.Println("Error writing file:", err)
 		return err

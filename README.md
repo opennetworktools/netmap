@@ -18,3 +18,8 @@ Flags:
   -u, --username string   username to connect to the host
 roopesh:~/ $ netmap create -n ok270 -u admin -p password
 ```
+
+<figure>
+  <img src="./graph.png" alt="Graph created by netmap">
+  <figcaption>Graph created by Netmap</figcaption>
+</figure>

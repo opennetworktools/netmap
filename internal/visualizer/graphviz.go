@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"aqwari.net/xml/xmltree"
 	"github.com/goccy/go-graphviz"
 	"github.com/goccy/go-graphviz/cgraph"
 )
@@ -23,7 +24,7 @@ type Edge struct {
 	NeighborPort string
 }
 
-func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap) error {
+func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, timestamp string) error {
 	g, err := graphviz.New(ctx)
 	if err != nil {
 		return err
@@ -80,7 +81,7 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap) error
 	// if err := g.Render(ctx, graph, "dot", &buf); err != nil {
 	// 	log.Fatal(err)
 	// }
-	// fmt.Println(buf.String())
+	// fmt.Printf("\n%v", buf.String())
 
 	// image.Image format
 	outputImg, err := g.RenderImage(ctx, graph)
@@ -88,34 +89,55 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap) error
 		return err
 	}
 
-	// encode
-	out := make([]byte, 0)
-	writer := bytes.NewBuffer(out)
+	// encode to svg
+	outputBuf := &bytes.Buffer{}
+	err = g.Render(ctx, graph, graphviz.SVG, outputBuf)
+	if err != nil {
+		return err
+	}
+
+	doc, err := xmltree.Parse(outputBuf.Bytes())
+	if err != nil {
+		return err
+	}
+
+	outputSvg := xmltree.Marshal(doc)
+
+	// MacOS Path: /Users/<USERNAME>/Library/Application Support/netmap
+	appDir, err := utils.CreateDirectoryToSaveOutput()
+	if err != nil {
+		return err
+	}
+
+	// create filenames for svg and png
+	baseFilename := "graph"
+	svgFilename := fmt.Sprintf("%s_%s.svg", baseFilename, timestamp)
+	svgFilenamePath := filepath.Join(appDir, svgFilename)
+	pngFilename := fmt.Sprintf("%s_%s.png", baseFilename, timestamp)
+
+	err = renderOutputToFilename(svgFilenamePath, outputSvg)
+	if err != nil {
+		return err
+	}
+
+	// encode to png
+	outputImgBytes := make([]byte, 0)
+	writer := bytes.NewBuffer(outputImgBytes)
 
 	err = png.Encode(writer, outputImg)
 	if err != nil {
 		return err
 	}
 
-	appDir, err := utils.CreateDirectoryToSaveOutput()
+	err = renderOutputToFilename(filepath.Join(appDir, pngFilename), writer.Bytes())
 	if err != nil {
 		return err
 	}
 
-	// creating a file
-	filePath := filepath.Join(appDir, "network-topology.png")
-	outputFile, err := os.Create(filePath)
-	if err != nil {
-		return err
-	}
-	defer outputFile.Close()
+	fmt.Printf("\nExported graph to .json, .svg, and .png file formats: %s", appDir)
+	fmt.Printf("\nTo view the SVG file, copy and paste the path in your favorite browser: %s", svgFilenamePath)
 
-	// writing to a file
-	_, err = outputFile.Write(writer.Bytes())
-	if err != nil {
-		return err
-	}
-	fmt.Printf("\nOutput path: %s", appDir)
+	// TODO: Create a ZIP file with .svg, .png, .jpg, dot files.
 
 	// Save as PNG
 	// filePath := "/Users/roopesh/Desktop/projects/network-mapper/network-topology.png"
@@ -124,6 +146,24 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap) error
 	// 	return err
 	// }
 	// fmt.Println("Network topology image saved:", filePath)
+
+	return nil
+}
+
+func renderOutputToFilename(filePath string, outData []byte) error {
+	// creating a file
+	// filePath := filepath.Join(appDir, "network-topology.png")
+	outputFile, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer outputFile.Close()
+
+	// writing to a file
+	_, err = outputFile.Write(outData)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

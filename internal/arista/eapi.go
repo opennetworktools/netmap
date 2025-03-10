@@ -1,8 +1,6 @@
 package arista
 
 import (
-	"opennetworktools/netmap/internal/utils"
-
 	"github.com/aristanetworks/goeapi"
 	"github.com/aristanetworks/goeapi/module"
 )
@@ -22,11 +20,6 @@ func GetNeighbors(hostname, username, password, enablePasswd string, port int) (
 	}
 	handle.AddCommand(lldp)
 	err = handle.Call()
-	if err != nil {
-		return lldp, err
-	}
-
-	err = utils.SaveStructAsJson(hostname, lldp)
 	if err != nil {
 		return lldp, err
 	}
