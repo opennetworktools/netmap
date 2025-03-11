@@ -1,0 +1,31 @@
+name: Build and Release Binaries
+on:
+  release:
+    types:
+      - created
+jobs:
+  build:
+    name: Build and Release Binaries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.1
+      - name: Display the version of go that we have installed
+        run: go version
+      - name: Display the release tag
+        run: echo ${{ github.event.release.tag_name }}
+      - name: Build binaries
+        run: make build
+      - name: List binaries
+        run: ls -l ./dist
+      - name: Upload the Rodeo binaries
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.event.release.tag_name }}
+          file: ./dist/netmap-*
+          file_glob: true
