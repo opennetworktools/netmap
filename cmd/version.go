@@ -15,6 +15,6 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number of Netmap",
 	Long:  `All software has versions. This is Netmap's`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("netmap v0.1.2 -- HEAD")
+		fmt.Println("netmap v0.1.3 -- HEAD")
 	},
 }

@@ -22,7 +22,7 @@ jobs:
         run: make build
       - name: List binaries
         run: ls -l ./dist
-      - name: Upload the Rodeo binaries
+      - name: Upload binaries
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
