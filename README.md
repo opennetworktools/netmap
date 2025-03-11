@@ -1,12 +1,10 @@
 # Netmap
 
-Netmap stands for Network Mapper, a visualizer for your inventory of network devices. Netmap starts collecting LLDP information with a single device credential and recursively lookup to create a graph. At the moment the tool supports only Arista devices. 
-
-Built with love by Roopesh and friends in Go.
+Netmap stands for Network Mapper, a tool that maps your inventory of network devices and creates a graph to visualize. Netmap starts collecting LLDP information with a single device credential and recursively lookup to create a graph. At the moment the tool supports only Arista devices.
 
 ## Getting Started
 
-## Installing using Curl
+## Install using Curl
 
 ```
 curl -s https://raw.githubusercontent.com/opennetworktools/netmap/refs/heads/main/install.sh | bash
@@ -15,18 +13,16 @@ curl -s https://raw.githubusercontent.com/opennetworktools/netmap/refs/heads/mai
 ## Install using Go
 
 ```
-go install github.com/opennetworktools/netmap@v0.1.1
+go install github.com/opennetworktools/netmap@v0.1.3
 ```
 
-## Build yourself
-
-### Go
+## Build from the source
 
 1. Clone the repo
 2. Run `go build .`
 3. Run `go install`
 
-### Makefile
+### Using Makefile
 
 1. Run `make`
 2. Check `dist/` directory
