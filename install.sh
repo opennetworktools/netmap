@@ -69,7 +69,9 @@ main() {
 
   install_netmap_cli
 
-  printf "\nNetmap CLI installed!\n"
+  printf "\nNetmap CLI installed!\n" 
+  Printf "\nRun \"netmap version\" to verify the installation."
+  printf "\nRun \"netmap help\" to get started!\n\n"
 }
 
 main

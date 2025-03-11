@@ -6,11 +6,30 @@ Built with love by Roopesh and friends in Go.
 
 ## Getting Started
 
+## Installing using Curl
+
+```
+curl -s https://raw.githubusercontent.com/opennetworktools/netmap/refs/heads/main/install.sh | bash
+```
+
 ## Install using Go
 
 ```
 go install github.com/opennetworktools/netmap@v0.1.1
 ```
+
+## Build yourself
+
+### Go
+
+1. Clone the repo
+2. Run `go build .`
+3. Run `go install`
+
+### Makefile
+
+1. Run `make`
+2. Check `dist/` directory
 
 ## Usage
 
