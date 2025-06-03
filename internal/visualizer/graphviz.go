@@ -26,7 +26,7 @@ type Edge struct {
 	NeighborPort string
 }
 
-func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, timestamp string) error {
+func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, timestamp string, protocol string) error {
 	g, err := graphviz.New(ctx)
 	if err != nil {
 		return err
@@ -49,7 +49,7 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 			fmt.Println("Error creating node:", err)
 			continue
 		}
-		node.SetLabel(utils.TruncateString(device, 10))
+		node.SetLabel(utils.TruncateString(device, 15))
 		node.SetShape(cgraph.EllipseShape)
 		node.SetStyle(cgraph.FilledNodeStyle)
 		nodes[device] = node
@@ -65,7 +65,7 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 					fmt.Println("Error creating node:", err)
 					continue
 				}
-				node.SetLabel(utils.TruncateString(neighbor, 10))
+				node.SetLabel(utils.TruncateString(neighbor, 15))
 				node.SetShape(cgraph.EllipseShape)
 				node.SetStyle(cgraph.FilledNodeStyle)
 				nodes[neighbor] = node
@@ -76,7 +76,11 @@ func SaveTopologyWithGraphviz(ctx context.Context, networkMap *NetworkMap, times
 				fmt.Println("Error creating edge:", err)
 				continue
 			}
-			e.SetLabel(fmt.Sprintf("%s - %s", formatEdgeName(edge.LocalPort), formatEdgeName(edge.NeighborPort)))
+			if protocol == "ospf" {
+				e.SetLabel(fmt.Sprintf("%s - %s", edge.LocalPort, edge.NeighborPort))
+			} else {
+				e.SetLabel(fmt.Sprintf("%s - %s", formatEdgeName(edge.LocalPort), formatEdgeName(edge.NeighborPort)))
+			}
 		}
 	}
 

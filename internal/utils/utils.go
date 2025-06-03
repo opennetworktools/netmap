@@ -18,7 +18,7 @@ func SaveStructAsJson(filename string, structData any, timestamp string) error {
 		return err
 	}
 
-	jsonFilename := fmt.Sprintf("%s_%s.json", "graph", timestamp)
+	jsonFilename := fmt.Sprintf("%s_%s.json", filename, timestamp)
 	jsonPilePath := filepath.Join(appDir, jsonFilename)
 	err = os.WriteFile(jsonPilePath, jsonRes, 0644)
 	if err != nil {

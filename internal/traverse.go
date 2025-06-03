@@ -87,7 +87,7 @@ func Traverse(hostname, username, password string) {
 	}
 
 	// Creating a graph and exporting it to a PNG file using go-graphviz
-	err = visualizer.SaveTopologyWithGraphviz(ctx, networkMap, timestamp)
+	err = visualizer.SaveTopologyWithGraphviz(ctx, networkMap, timestamp, "lldp")
 	if err != nil {
 		fmt.Println("Error rendering the topology: ", err)
 		return
